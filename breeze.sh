@@ -12,6 +12,26 @@ usage() {
   exit 1
 }
 
+# Function to check the success of the last executed command
+check_success() {
+  if [ "$?" -ne 0 ]; then
+    echo "Error: $1 failed."
+    exit 1
+  fi
+}
+
+# Check if OpenSSL version is 1.1.1(x) where x is optional
+check_openssl_version() {
+  openssl_version=$(openssl version | awk '{print $2}')
+  if [[ ! "$openssl_version" =~ ^1\.1\.1([[:alnum:]]*)$ ]]; then
+    echo "Error: OpenSSL version must be 1.1.1 or 1.1.1(x), but found version $openssl_version."
+    exit 1
+  fi
+}
+
+# Step 0: Check OpenSSL version
+check_openssl_version
+
 # Check if the correct number of arguments is provided
 if [ "$#" -ne 2 ]; then
   echo "Error: Incorrect number of arguments."
@@ -43,14 +63,6 @@ for tool in "${REQUIRED_TOOLS[@]}"; do
     exit 1
   fi
 done
-
-# Function to check the success of the last executed command
-check_success() {
-  if [ "$?" -ne 0 ]; then
-    echo "Error: $1 failed."
-    exit 1
-  fi
-}
 
 # Step 1: Decrypt the configuration backup
 echo "Step 1: Decrypting the configuration backup..."
@@ -135,7 +147,6 @@ echo "2. Navigate to https://192.168.31.1/#/WAN/DualWan and enable Dual WAN."
 echo "   This will reboot the device and enable SSH access."
 echo "3. To ensure SSH access persists across reboots, add the following line to '/etc/rc.local' on the device:"
 echo '   dropbear -p 0.0.0.0:22'
-echo "4. It is recommended to disabled Dual WAN as it is not functional and can cause additional trouble"
+echo "4. It is recommended to disable Dual WAN as it is not functional and can cause additional trouble."
 echo "========================================"
 echo "All steps completed successfully!"
-
