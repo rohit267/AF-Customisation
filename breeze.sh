@@ -1,14 +1,14 @@
 #!/bin/bash
 
-# Usage: ./breeze.sh <encrypted_file> <server_key>
+# Usage: ./breeze.sh <encrypted_file>
 
 # Exit immediately if a command exits with a non-zero status
 set -e
 
 # Function to display usage instructions
 usage() {
-  echo "Usage: $0 <encrypted_file> <server_key>"
-  echo "Example: $0 backup.enc server.key"
+  echo "Usage: $0 <encrypted_file>"
+  echo "Example: $0 backup.enc"
   exit 1
 }
 
@@ -40,18 +40,11 @@ fi
 
 # Assign command-line arguments to variables
 ENCRYPTED_FILE="$1"
-SERVER_KEY="$2"
 DECRYPTED_FILE="dec_backup_og.tar.gz"
 
 # Check if the encrypted file exists
 if [ ! -f "$ENCRYPTED_FILE" ]; then
   echo "Error: Encrypted file '$ENCRYPTED_FILE' does not exist."
-  exit 1
-fi
-
-# Check if the server key file exists
-if [ ! -f "$SERVER_KEY" ]; then
-  echo "Error: Server key file '$SERVER_KEY' does not exist."
   exit 1
 fi
 
@@ -66,9 +59,8 @@ done
 
 # Step 1: Decrypt the configuration backup
 echo "Step 1: Decrypting the configuration backup..."
-openssl enc -pbkdf2 -in "$ENCRYPTED_FILE" -out "$DECRYPTED_FILE" -d -aes256 -k "$(cat "$SERVER_KEY")" || {
-  echo "Warning: Failed to decrypt the backup. The server.key may be invalid."
-  echo "Each router has its own respective server.key file. Please check that you are using the correct key."
+openssl enc -pbkdf2 -in "$ENCRYPTED_FILE" -out "$DECRYPTED_FILE" -d -aes256 -k "/etc/server.key" || {
+  echo "Warning: Failed to decrypt the backup. The key may be invalid."
   exit 1
 }
 check_success "Decryption"
@@ -130,7 +122,7 @@ check_success "Repackaging"
 
 # Step 6: Re-encrypt the modified backup
 echo "Step 6: Re-encrypting the modified backup..."
-openssl enc -pbkdf2 -in "$MODIFIED_TAR" -out "encrypted_backup_mod.tar.gz" -e -aes256 -k "$(cat "$SERVER_KEY")"
+openssl enc -pbkdf2 -in "$MODIFIED_TAR" -out "encrypted_backup_mod.tar.gz" -e -aes256 -k "/etc/server.key"
 check_success "Re-encryption"
 
 # Step 7: Cleanup temporary files
