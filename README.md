@@ -22,15 +22,17 @@ With the firmware in hand, and some `binwalk`ing around, we now have the rootfs.
 
 ### Breaking the encryption
 
-History repeats itself, and it did yet again with the `server.key` being reutilized yet again as the encryption key for their Config Backups, not the case for their Debug Logs (dbglog) though. This time, they switched to AES-256 instead of AES-128 like the last time. A certain binary, `jcrypt`, acts as the sole encryption/decryption service. A lot of references throughout the system, with it even being used to restore the configuration. Doing a quick `strings` on jcrypt, it can be found that they are indeed using almost the same openssl encryption command, and to find the exact key, we just had to `strace` it a bit, which is quite easy with QEMU's AARCH64 Static Chroot.
+History repeats itself, and it did yet again with the `server.key` being reutilized yet again as the encryption key for their Config Backups (well, actually they didn't; rather they used the string `"/etc/server.key"` to encrypt the config backup), not the case for their Debug Logs (dbglog) though. This time, they switched to AES-256 instead of AES-128 like the last time. A certain binary, `jcrypt`, acts as the sole encryption/decryption service. A lot of references throughout the system, with it even being used to restore the configuration. Doing a quick `strings` on jcrypt, it can be found that they are indeed using almost the same openssl encryption command, and to find the exact key, we just had to `strace` it a bit, which is quite easy with QEMU's AARCH64 Static Chroot.
 
 Thus, the command stands:
 
 ```shell
-openssl enc -pbkdf2 -in encryptedfile -out decryptedfile -d -aes256 -k server.key
+openssl enc -pbkdf2 -in encryptedfile -out decryptedfile -d -aes256 -k "/etc/server.key"
 ```
 
-### Important Note: Only OpenSSL v1.1.1 can decrypt/encrypt files, this is a limitation brought by the major changes in OpenSSL v3 that make it non-backwards compatible. As J is using a 2020-2021 OpenWRT Snapshot, the OpenSSL version in the firmware is at v1.1.1s.
+_P.S.: Yeah this is funny how J used the string `"/etc/server.key"` to encrypt the backup rather than using the file itself. Even kids know that they should have used `-kfile` instead of `-k`_
+
+### Important Note: Only OpenSSL v1.1.1 can decrypt/encrypt files, this is a limitation brought by the major changes in OpenSSL v3 that make it non-backwards compatible. As J is using a 2020-2021 OpenWRT Snapshot, the OpenSSL version in the firmware is at v1.1.1s
 
 As we unarchive the backup, we find that it is a snapshot of `/etc`, this makes things a lot more easier for us to achieve, because it contains both `passwd` and `shadow` files. It also contains `mwan3.user`, which is a shell script that activates when the Dual WAN Mode of the AF is activated. You can activate the Dual WAN from here: <https://192.168.31.1/#/WAN/DualWan>
 
@@ -53,8 +55,10 @@ echo -e \"password\npassword\" | passwd root
 Now to wrap up the backup and finally get root access, all you have to do is generate a `.tar.gz` of the file, and then re-encrypt it with the server.key with this command:
 
 ```shell
-openssl enc -pbkdf2 -in decryptedfile -out encryptedfile -e -aes256 -k server.key
+openssl enc -pbkdf2 -in decryptedfile -out encryptedfile -e -aes256 -k "/etc/server.key"
 ```
+
+_P.S.: Yeah! Please don't re-encrypt the file with the actual `server.key`. Rather use the string `/etc/server.key`_
 
 ### Stairway to Heaven
 
@@ -84,4 +88,3 @@ config acs
 ```
 
 ### There is a script in this repo too, and you can just use that. Remember to have openssl, tar, and gunzip installed. The script only works in UNIX-like systems (Linux, macOS, BSD, etc.)
-
