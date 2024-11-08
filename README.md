@@ -30,6 +30,8 @@ Thus, the command stands:
 openssl enc -pbkdf2 -in encryptedfile -out decryptedfile -d -aes256 -k server.key
 ```
 
+### Important Note: Only OpenSSL v1.1.1 can decrypt/encrypt files, this is a limitation brought by the major changes in OpenSSL v3 that make it non-backwards compatible. As J is using a 2020-2021 OpenWRT Snapshot, the OpenSSL version in the firmware is at v1.1.1s.
+
 As we unarchive the backup, we find that it is a snapshot of `/etc`, this makes things a lot more easier for us to achieve, because it contains both `passwd` and `shadow` files. It also contains `mwan3.user`, which is a shell script that activates when the Dual WAN Mode of the AF is activated. You can activate the Dual WAN from here: <https://192.168.31.1/#/WAN/DualWan>
 
 ### Figuring out the rest
