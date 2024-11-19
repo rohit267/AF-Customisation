@@ -1,5 +1,9 @@
 # Breezing through the AF
 
+## Disclaimer
+
+*This is for educational purposes ONLY. No one is responsible for any type of damage.*
+
 ## A walk-through onto getting root access in the J AF Series of Routers
 
 ### Intro
@@ -88,8 +92,3 @@ config acs
 ```
 
 ### There is a script in this repo too, and you can just use that. Remember to have openssl, tar, and gunzip installed. The script only works in UNIX-like systems (Linux, macOS, BSD, etc.)
-
-
-## Disclaimer
-
-*This is for educational purposes ONLY. No one is responsible for any type of damage.*
