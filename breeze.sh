@@ -33,7 +33,7 @@ check_openssl_version() {
 check_openssl_version
 
 # Check if the correct number of arguments is provided
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 1 ]; then
   echo "Error: Incorrect number of arguments."
   usage
 fi
@@ -103,16 +103,29 @@ echo "Step 3: Setting new root password hash..."
 sed -i "s|^root:[^:]*:|root:${NEW_PASSWORD_HASH}:|" "$SHADOW_FILE"
 check_success "Updating root password hash"
 
-# Ensure the mwan3.user file exists
+# Ensure the mwan3.user file exists, or prompt for alternative methods
 if [ ! -f "$MWAN_FILE" ]; then
-  echo "Error: mwan3.user file '$MWAN_FILE' does not exist in the backup."
-  exit 1
+  echo "Warning: mwan3.user file '$MWAN_FILE' does not exist in the backup."
+  read -p "Would you like to use an alternative method (e.g., /etc/firewall.user)? (y/n): " ALTERNATE_METHOD
+  if [[ "$ALTERNATE_METHOD" =~ ^[Yy]$ ]]; then
+    FIREWALL_FILE="$EXTRACT_DIR/etc/firewall.user"
+    mkdir -p "$(dirname "$FIREWALL_FILE")"
+    echo 'dropbear -p 0.0.0.0:22' > "$FIREWALL_FILE"
+    echo "Step 4 (Alternative): Configuring /etc/firewall.user to start dropbear..."
+    check_success "Creating firewall.user for dropbear"
+    echo "Note: After gaining SSH access, it is recommended to move the configuration to /etc/rc.local:"
+    echo "      Add 'dropbear -p 0.0.0.0:22' before the 'exit 0' line in /etc/rc.local."
+    echo "      Delete /etc/firewall.user after SSH setup to avoid unnecessary configurations."
+  else
+    echo "Error: mwan3.user is not found, and no alternative method selected. Exiting..."
+    exit 1
+  fi
+else
+  # Append dropbear command to mwan3.user
+  echo "Step 4: Configuring mwan3.user to start dropbear on Dual WAN activation..."
+  echo 'dropbear -p 0.0.0.0:22' >> "$MWAN_FILE"
+  check_success "Configuring dropbear in mwan3.user"
 fi
-
-# Append dropbear command to mwan3.user
-echo "Step 4: Configuring mwan3.user to start dropbear on Dual WAN activation..."
-echo 'dropbear -p 0.0.0.0:22' >> "$MWAN_FILE"
-check_success "Configuring dropbear in mwan3.user"
 
 # Step 5: Repackage the modified backup
 echo "Step 5: Repackaging the modified backup..."
@@ -127,7 +140,7 @@ check_success "Re-encryption"
 
 # Step 7: Cleanup temporary files
 echo "Step 7: Cleaning up temporary files..."
-rm -rf "$DECRYPTED_FILE" "$EXTRACT_DIR" "$MODIFIED_TAR"
+# rm -rf "$DECRYPTED_FILE" "$EXTRACT_DIR" "$MODIFIED_TAR"
 check_success "Cleanup"
 
 # Final Instructions
@@ -137,8 +150,10 @@ echo "Follow these steps to restore and gain root access:"
 echo "1. Upload 'encrypted_backup_mod.tar.gz' using the device's backup restore feature."
 echo "2. Navigate to https://192.168.31.1/#/WAN/DualWan and enable Dual WAN."
 echo "   This will reboot the device and enable SSH access."
-echo "3. To ensure SSH access persists across reboots, add the following line to '/etc/rc.local' on the device:"
-echo '   dropbear -p 0.0.0.0:22'
-echo "4. It is recommended to disable Dual WAN as it is not functional and can cause additional trouble."
+echo "   If /etc/firewall.user was created, it will also start Dropbear on port 22."
+echo "3. After gaining SSH access, to make it persistent:"
+echo "   a. Add 'dropbear -p 0.0.0.0:22' to '/etc/rc.local' before the 'exit 0' line."
+echo "   b. Delete '/etc/firewall.user' if it was used for SSH access."
+echo "4. Disable Dual WAN as it may not function correctly and could cause issues."
 echo "========================================"
 echo "All steps completed successfully!"
