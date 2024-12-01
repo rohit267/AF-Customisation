@@ -140,7 +140,7 @@ check_success "Re-encryption"
 
 # Step 7: Cleanup temporary files
 echo "Step 7: Cleaning up temporary files..."
-# rm -rf "$DECRYPTED_FILE" "$EXTRACT_DIR" "$MODIFIED_TAR"
+rm -rf "$DECRYPTED_FILE" "$EXTRACT_DIR" "$MODIFIED_TAR"
 check_success "Cleanup"
 
 # Final Instructions
