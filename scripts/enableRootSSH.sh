@@ -2,7 +2,7 @@
 
 # ONLY for educational purposes, No one is responsible for any type of damage.
 
-# Usage: ./breeze.sh <encrypted_file>
+# Usage: ./enableRootSSH.sh <encrypted_file>
 
 # Exit immediately if a command exits with a non-zero status
 set -e
