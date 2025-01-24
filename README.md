@@ -12,6 +12,6 @@
 4. [JAF IDU Reset Via SSH](instructions/JAF-IDU-Reset-Via-SSH.md)
 5. [JAF IDU LuCI Install Guide](instructions/JAF-IDU-LuCI-Install-Guide.md)
 6. [JAF ODU Access Via The IDU](instructions/JAF-ODU-Access-Via-The-IDU.md)
-7. [JAF-ODU-SSH-Access-Via-ADB](instructions/JAF-ODU-SSH-Access-Via-ADB.md)
+7. [JAF ODU SSH Access Via ADB](instructions/JAF-ODU-SSH-Access-Via-ADB.md)
 
 
