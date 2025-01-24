@@ -56,7 +56,7 @@ if ! grep --version | grep -v BSD | grep -q GNU; then
   exit 1
 fi
 
-read -sp "Please enter your jio device admin password:" DEVICE_PASSWORD
+read -sp "Please enter your JAF IDU device admin password:" DEVICE_PASSWORD
 
 # Step 1: Login to the device
 echo "Step 1: Trying to login to the router..."

@@ -6,8 +6,12 @@
 
 ## Table Of Contents
 
-1. [Get Root Access in JAF IDU](instructions/Get-Root-Access-JAF-IDU.md)
-2. [Accessing the ODU via the IDU](instructions/Accessing-The-ODU-Via-The-IDU.md)
-3. [Installing LuCI on JAF IDU](instructions/Installing-Luci-On-JAF-IDU.md)
-4. [Resetting the Router via SSH](instructions/Resetting-The-Router-Via-SSH.md)
-5. [JAF IDU UART Access](instructions/JAF-IDU-UART-Access.md)
+1. [JAF IDU Root Access](instructions/JAF-IDU-Root-Access.md)
+2. [JAF IDU UART Access](instructions/JAF-IDU-UART-Access.md)
+3. [JAF IDU UBOOT Access](instructions/JAF-IDU-UBOOT-Access.md)
+4. [JAF IDU Reset Via SSH](instructions/JAF-IDU-Reset-Via-SSH.md)
+5. [JAF IDU LuCI Install Guide](instructions/JAF-IDU-LuCI-Install-Guide.md)
+6. [JAF ODU Access Via The IDU](instructions/JAF-ODU-Access-Via-The-IDU.md)
+7. [JAF-ODU-SSH-Access-Via-ADB](instructions/JAF-ODU-SSH-Access-Via-ADB.md)
+
+
