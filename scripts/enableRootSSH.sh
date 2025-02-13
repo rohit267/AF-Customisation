@@ -2,15 +2,16 @@
 
 # ONLY for educational purposes, No one is responsible for any type of damage.
 
-# Usage: ./enableRootSSH.sh <encrypted_file>
+# Usage: ./enableRootSSH.sh <device_ip>
 
 # Exit immediately if a command exits with a non-zero status
 set -e
 
 # Function to display usage instructions
 usage() {
-  echo "Usage: $0 <encrypted_file>"
-  echo "Example: $0 backup.enc"
+  echo "This script was specifically made for Jio Extender, though this might work for normal IDUs; it is still advised to use the normal breeze.sh"
+  echo "Usage: $0 <device_ip>"
+  echo "Example: $0 192.168.31.1"
   exit 1
 }
 
