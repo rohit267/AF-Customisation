@@ -14,4 +14,5 @@
 6. [JAF ODU Access Via The IDU](instructions/JAF-ODU-Access-Via-The-IDU.md)
 7. [JAF ODU SSH Access Via ADB](instructions/JAF-ODU-SSH-Access-Via-ADB.md)
 
-
+## GitAds Sponsored
+[![Sponsored by GitAds](https://gitads.dev/v1/ad-serve?source=jfc-group/af-customisation@github)](https://gitads.dev/v1/ad-track?source=jfc-group/af-customisation@github)
