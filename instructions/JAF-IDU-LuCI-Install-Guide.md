@@ -168,6 +168,4 @@ If the USB overlay isn’t activating on boot, follow these steps. First, check 
 * Download the firmware from: [https://small.fileditchstuff.me/s18/TGJFgrgUrrolDsBKDatu.tar.gz](https://small.fileditchstuff.me/s18/TGJFgrgUrrolDsBKDatu.tar.gz)
 * Extract the archive, flash the appropriate firmware, and retry the extroot setup.
 
----
 
-Let me know if you’d like this turned into a properly formatted Markdown file or PDF.
