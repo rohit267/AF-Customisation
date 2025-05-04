@@ -1,32 +1,54 @@
+
+---
+
 # Installing LuCI on JAF IDU
 
-_Disclaimer: This is ONLY for educational purposes, No one is responsible for any type of damage. So be aware._
+*Disclaimer: This is ONLY for educational purposes. No one is responsible for any type of damage. Proceed at your own risk.*
 
-**WARNING: Perform step 0 first because if you accidentally fill up the storage your only option would be to reset the router. You will encounter _500 internal server error_ if you messup the installation in between and you wont be able to reset the router via webui; your only option would be the physical reset using the reset button or [Resetting the router via SSH](JAF-IDU-Reset-Via-SSH.md)**
+**⚠️ WARNING: Perform Step 0 first. If you accidentally fill up the storage, your only option will be to reset the router. If the installation fails midway, you will likely encounter a *500 Internal Server Error* and won’t be able to reset the router via the web UI. Your only recovery options will be the physical reset button or [Resetting the router via SSH](JAF-IDU-Reset-Via-SSH.md).**
 
-## Step 0
+---
 
-- Necessary because the internal storage is quite less and doesn't give us much space to work with
+## Step 0: Expand Storage
 
-- Expanding the root via using a usb overlay (did not find any other better way which did not involve risking the router):
-- Follow [this official guide](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration) **CAREFULLY** and you will be good to go
-- Reboot the device and run `df -h` and if you see your pendrive mounted at `/` then you are good to move ahead
-- If you face any errors, check [Troubleshooting](#troubleshooting) section
+* This step is necessary because the internal storage is very limited.
+* Expand the root filesystem using a USB overlay (no safer method found that doesn’t risk the router).
+* Follow [this official guide](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration) **carefully**.
+* Reboot the device and run `df -h`. If you see your USB drive mounted at `/`, you're good to go.
+* If you encounter errors, check the [Troubleshooting](#troubleshooting) section.
 
-## Step 1
+---
 
-- Remove these Folders `rm -rf /www`
+## Step 1: Clean up OPKG Feeds
 
-## Step 2
+* Update the OPKG feeds.
+* The default OPKG feeds include many dead links used during production that now throw warnings during `opkg update`.
+* To fix this, use any editor (we’ll use `vi`) to clean up the distfeeds.
+* Open the file:
 
-- Check if uhttpd is running `ps aux | grep uhttpd*`
+  ```sh
+  vi /etc/opkg/distfeeds.conf
+  ```
+* Disable dead links and keep only valid OpenWrt ones. Below is an example for a MediaTek-based router running OpenWrt 22.02 snapshot. Modify it to match your OpenWrt version as closely as possible.
 
-- Uninstalling Luci and all Luci related stuff
+**Example of a clean distfeed:**
 
-  _During reinstalling these Luci packages a pkg named `libnl-tiny2022-11-01` will cause a conflict. **DO NOT UNINSTALL THAT**; the error basically outlines two modules with similar purpose are having a conflict; the original pkg has lot of dependencies, so overwriting the file is better option._
+```sh
+src/gz openwrt_base https://downloads.openwrt.org/releases/21.02-SNAPSHOT/packages/aarch64_cortex-a53/base
+src/gz openwrt_luci https://downloads.openwrt.org/releases/21.02-SNAPSHOT/packages/aarch64_cortex-a53/luci
+src/gz openwrt_packages https://downloads.openwrt.org/releases/21.02-SNAPSHOT/packages/aarch64_cortex-a53/packages
+src/gz openwrt_routing https://downloads.openwrt.org/releases/21.02-SNAPSHOT/packages/aarch64_cortex-a53/routing
+src/gz openwrt_telephony https://downloads.openwrt.org/releases/21.02-SNAPSHOT/packages/aarch64_cortex-a53/telephony
+```
 
-  ```shell
-  opkg remove --force-depends \
+---
+
+## Step 2: Uninstall Existing LuCI Components
+
+*Note: During reinstallation, a package named `libnl-tiny2022-11-01` may cause a conflict. **DO NOT UNINSTALL IT.** The conflict arises because two packages serve similar purposes. The original package has many dependencies, so it's safer to overwrite it.*
+
+```sh
+opkg remove --force-depends \
   liblucihttp-lua \
   liblucihttp0 \
   luci \
@@ -47,82 +69,105 @@ _Disclaimer: This is ONLY for educational purposes, No one is responsible for an
   luci-ssl-openssl \
   luci-theme-bootstrap \
   rpcd-mod-luci
-  ```
+```
 
-- Now after uninstalling the stuff lot of things like configs remained ; we have to clear that too;
-  1. Check these folders if they are not empty use the commands bellow to empty them completely.
+---
 
-      ```shell
-      ls /usr/lib/lua/luci/
-      ls /usr/share/luci/
-      ls /etc/config/luci
-      ```
+## Step 3: Reinstall LuCI
 
-      ```shell
-      rm -rf /usr/lib/lua/luci/
-      rm -rf /usr/share/luci/
-      rm -f /etc/config/luci
-      ```
+```sh
+opkg update
+opkg install --force-overwrite luci
+```
 
-## Step 3
+You may receive this warning (ignore it if it doesn’t appear):
 
-- Reinstalling the Luci packages
+```sh
+Collected errors:
+ * resolve_conffiles: Existing conffile /etc/config/luci is different from the conffile in the new package. The new conffile will be placed at /etc/config/luci-opkg.
+```
 
-  ``` sh
-  opkg update
-  opkg install --force-overwrite luci
-  ```
+To resolve this:
 
-- You will receive this error (IF NOT JUST MOVE ALONG)
+```sh
+mv /etc/config/luci-opkg /etc/config/luci
+```
 
-  ``` sh
-  Collected errors:
-  * resolve_conffiles: Existing conffile /etc/config/luci is different from the conffile in the new package. The new conffile will be placed at /etc/config/luci-opkg.
-  ```
+If successful, your `/www/` directory should contain:
 
-- Just replace the older Luci config with newer one:  
+```sh
+cgi-bin      index.html   luci-static
+```
 
-  ```shell
-  mv /etc/config/luci-opkg /etc/config/luci
-  ```
+* The default `uhttpd` server command will also launch the new LuCI interface.
+* Access LuCI: [https://192.168.31.1/cgi-bin/luci/](https://192.168.31.1/cgi-bin/luci/)
+* The LuCI password will be the same as your SSH password.
 
-- Now if everything went well your `/www/` will look something like this
-
-  ```shell
-  cgi-bin      index.html   luci-static
-  ```
-
-- The default command which launches the uhttpd server works just fine for launching the stock LuCI too
-
-- Launch LuCI: <https://192.168.31.1/cgi-bin/luci/>
-
-- The default password for LuCI will be the same you used to login via ssh
+---
 
 ## Note
 
-Many things dont work in the LuCI interface yet because J\*\* has used custom LuCI API endpoints for some services and for others are simply not implemented. This may or may not be fixed later (someone has to dedicate their time to fix all the mess j** has created)
+~~Many features do not work in the LuCI interface because they have used custom LuCI API endpoints or left some features unimplemented. These may or may not be fixed in the future (someone needs to invest time fixing the mess).~~
 
-- List of things not working in LuCI:
- Firewall section (can only restart firewall)
- everykind of logging is borked (j\*\* implemented it's own bs, further analysis needed)
- `opkg` management
- Backup / Flash section
- Switch (it uses an unknown topology)
+---
+
+### Hotfix for Broken CGI API Endpoints
+
+Fixes: System Logs, Software, Firewall, Backup/Restore/Flash pages in LuCI.
+
+```sh
+opkg update
+opkg install cgi-io
+```
+
+```sh
+cd /www/cgi-bin
+ln -s ../../usr/libexec/cgi-io cgi-backup
+ln -s ../../usr/libexec/cgi-io cgi-download
+ln -s ../../usr/libexec/cgi-io cgi-exec
+ln -s ../../usr/libexec/cgi-io cgi-upload
+```
+
+**Working features in LuCI:**
+
+* Technically everything, except those controlled by OpenSync. Disabling OpenSync is possible but should be done with caution, as you will need to manually configure Wi-Fi management, DNS resolution, uplink, etc.—all of which are part of the OpenSync management layer.
+
+---
 
 ## Bonus
 
-1. Use `btop` if you want a nice CLI based resource monitor. You can either compile your own or you can simply use the one @pokewizardSAM compiled in the bin folder.
+* Use `btop` for a modern CLI-based resource monitor. You can compile it yourself or use the precompiled version by @pokewizardSAM.
 
-    Link: <https://drive.google.com/drive/folders/1Om93J8oUOOn1MDMKNvqpbZeXX_Mmn0FK?usp=sharing>
+  Link: [https://drive.google.com/drive/folders/1Om93J8oUOOn1MDMKNvqpbZeXX\_Mmn0FK?usp=sharing](https://drive.google.com/drive/folders/1Om93J8oUOOn1MDMKNvqpbZeXX_Mmn0FK?usp=sharing)
+
+---
 
 ## Troubleshooting
 
-If you are facing issues such as overlay not activating upon boot then follow the below steps to resolve them. Keep the dmesg output ready and search for `extroot`
+If the USB overlay isn’t activating on boot, follow these steps. First, check the `dmesg` output and look for `extroot`.
 
-- `extroot-not-configured` :
-  - Check the dmesg output and if that contains this message then you have problematic configs. to check that do a `cat /etc/config/fstab` ; this should have rwm and extroot with a unique uuid defined with a `option target '/overlay'` in extroot section. If yours doesn't have that, then add it manually. For example see below
-    ![extroot_fstab_config.png](../assets/IDU_extroot_fstab_config.png)
+### extroot-not-configured
 
-- `ubiblock0_1 not found` :
-  - To mitigate this error you have to reflash your stock fw images. you can get a copy of fw from here <https://small.fileditchstuff.me/s18/TGJFgrgUrrolDsBKDatu.tar.gz>.
-  - Extract the archive and flash your respective fw and then retry the extroot guide again.
+* This usually means your configuration is invalid.
+* Run:
+
+  ```sh
+  cat /etc/config/fstab
+  ```
+* Ensure `rwm` and `extroot` entries exist with a unique UUID and a line like:
+
+  ```sh
+  option target '/overlay'
+  ```
+* Example configuration:
+  ![extroot\_fstab\_config.png](../assets/IDU_extroot_fstab_config.png)
+
+### ubiblock0\_1 not found
+
+* This error usually indicates the need to reflash the stock firmware.
+* Download the firmware from: [https://small.fileditchstuff.me/s18/TGJFgrgUrrolDsBKDatu.tar.gz](https://small.fileditchstuff.me/s18/TGJFgrgUrrolDsBKDatu.tar.gz)
+* Extract the archive, flash the appropriate firmware, and retry the extroot setup.
+
+---
+
+Let me know if you’d like this turned into a properly formatted Markdown file or PDF.
