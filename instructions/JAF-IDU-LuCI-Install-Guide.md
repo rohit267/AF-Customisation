@@ -29,9 +29,9 @@
   ```sh
   vi /etc/opkg/distfeeds.conf
   ```
-* Disable dead links and keep only valid OpenWrt ones. Below is an example for a MediaTek-based router running OpenWrt 22.02 snapshot. Modify it to match your OpenWrt version as closely as possible.
+* Disable dead links and keep only valid OpenWrt ones. Below is an example for a MediaTek-based router running OpenWrt 22.02 snapshot and OpenWrt 19.07 snapshot. Modify your distfeeds accordingly.
 
-**Example of a clean distfeed:**
+**Example of a clean distfeed (22.02):**
 
 ```sh
 src/gz openwrt_base https://downloads.openwrt.org/releases/21.02-SNAPSHOT/packages/aarch64_cortex-a53/base
@@ -40,6 +40,17 @@ src/gz openwrt_packages https://downloads.openwrt.org/releases/21.02-SNAPSHOT/pa
 src/gz openwrt_routing https://downloads.openwrt.org/releases/21.02-SNAPSHOT/packages/aarch64_cortex-a53/routing
 src/gz openwrt_telephony https://downloads.openwrt.org/releases/21.02-SNAPSHOT/packages/aarch64_cortex-a53/telephony
 ```
+
+**Example of a clean distfeed (19.07):**
+```sh
+src/gz openwrt_base https://archive.openwrt.org/releases/19.07.9/packages/arm_cortex-a7_neon-vfpv4/base
+src/gz openwrt_freifunk https://archive.openwrt.org/releases/19.07.9/packages/arm_cortex-a7_neon-vfpv4/freifunk
+src/gz openwrt_luci https://archive.openwrt.org/releases/19.07.9/packages/arm_cortex-a7_neon-vfpv4/luci
+src/gz openwrt_packages https://archive.openwrt.org/releases/19.07.9/packages/arm_cortex-a7_neon-vfpv4/packages
+src/gz openwrt_routing https://archive.openwrt.org/releases/19.07.9/packages/arm_cortex-a7_neon-vfpv4/routing
+src/gz openwrt_telephony https://archive.openwrt.org/releases/19.07.9/packages/arm_cortex-a7_neon-vfpv4/telephony
+```
+
 
 ---
 
