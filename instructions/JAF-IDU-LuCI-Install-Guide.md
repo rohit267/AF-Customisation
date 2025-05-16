@@ -147,7 +147,7 @@ ln -s ../../usr/libexec/cgi-io cgi-upload
 
 ## Bonus
 
-* Use `btop` for a modern CLI-based resource monitor. You can compile it yourself or use the precompiled version by @pokewizardSAM.
+* Use `btop` for a modern CLI-based resource monitor. You can compile it yourself or use the precompiled version by @BlueNecko.
 
   Link: [https://drive.google.com/drive/folders/1Om93J8oUOOn1MDMKNvqpbZeXX\_Mmn0FK?usp=sharing](https://drive.google.com/drive/folders/1Om93J8oUOOn1MDMKNvqpbZeXX_Mmn0FK?usp=sharing)
 
