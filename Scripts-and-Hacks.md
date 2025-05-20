@@ -7,7 +7,7 @@
 | 04    | [ODU Local link generator](#ODU%20Local%20link%20generator)            | @timeisexpensivee |
 
 ## Root enabler for Extender/IDU
-#### script: [enableRootSSH](scripts/enableRootSSH.sh)
+### script: [enableRootSSH](scripts/enableRootSSH.sh)
 This is an alternate method for rooting, alt to the OG manual method of editing the files. This has been tested with few models such as Extenders and idu6801. Although it should work the same for every other idu too, but it isn't confirmed yet. 
 
 ## Network stats logger for ODU
@@ -16,17 +16,17 @@ This script works by utilizing the restful api endpoints provided by the odu. Th
 The script is supposed to run on any device (primarily idu) which is connected to the odu via an ether link. The script does automatic auth given it knows the salt and the hashed password. 
 ##### Note: password automation is still under development and for now needs manual hash capture 
 
-#### script: [odu_stats.sh](scripts/odu_stats.sh)
+### script: [odu_stats.sh](scripts/odu_stats.sh)
 You needs to edit the site, api, login and filepath variables before executing. The script will save the data in a .csv file in the following format.
 ![](assets/ODU_STATS_SCRIPT.png)
-#### script:  [odu_stats_live.sh](scripts/odu_stats_live.sh)
+### script:  [odu_stats_live.sh](scripts/odu_stats_live.sh)
 This script is supposed to be ran live to help with odu mounting and alignment(it's barebone for now)
 ![](assets/ODU_STATS_LIVE_SCRIPT.png)
 
 ### Formatting and graph plots
 These are simple python scripts which will plot graphs for you, for now only few are there, more may or may not be added in future.  
 
-#### script: [relation.py](scripts/realation.py) 
+### script: [relation.py](scripts/realation.py) 
 ![RELATION](assets/RELATION.png)
 
 
@@ -116,7 +116,7 @@ opensync_post_start()
 ```
 
 Note: script is underwork, anything can go wrong, so do not be dumb.
-#### script: [opensync_disabler](scripts/opensync_disabler.sh)
+### script: [opensync_disabler](scripts/opensync_disabler.sh)
 
 
 ## ODU Local link generator
@@ -125,4 +125,4 @@ Converts a MAC address (e.g., 00:06:AE:A3:AE:90) to IPv6 link-local (EUI-64)
 Ensure MAC is lowercase and colon-separated
 
 ![](assets/FIND_ODU_LOCAL_LINK.png)
-#### script: [find_oduv6](scripts/find_oduv6.sh)
+### script: [find_oduv6](scripts/find_oduv6.sh)
