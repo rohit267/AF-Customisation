@@ -13,6 +13,8 @@
 5. [JAF IDU LuCI Install Guide](instructions/JAF-IDU-LuCI-Install-Guide.md)
 6. [JAF ODU Access Via The IDU](instructions/JAF-ODU-Access-Via-The-IDU.md)
 7. [JAF ODU SSH Access Via ADB](instructions/JAF-ODU-SSH-Access-Via-ADB.md)
+8. [List-OF-IDU's-and-ODU's](instructions/List-OF-IDU's-and-ODU's.md)
+9. [Scripts-and-Hacks](instructions/Scripts-and-Hacks.md)
 
 ## GitAds Sponsored
 [![Sponsored by GitAds](https://gitads.dev/v1/ad-serve?source=jfc-group/af-customisation@github)](https://gitads.dev/v1/ad-track?source=jfc-group/af-customisation@github)
