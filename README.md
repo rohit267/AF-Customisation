@@ -16,7 +16,7 @@
 8. [List-OF-IDU's-and-ODU's](instructions/List-OF-IDU's-and-ODU's.md)
 9. [Scripts-and-Hacks](Scripts-and-Hacks.md)
 
-### [[General-Troubleshooting]]
+### [General-Troubleshooting](General-Troubleshooting.md)
 
 
 
