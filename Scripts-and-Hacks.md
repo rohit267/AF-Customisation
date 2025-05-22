@@ -1,10 +1,9 @@
-
-| sr.No | Name                                                                   | author            |
-| ----- | ---------------------------------------------------------------------- | ----------------- |
-| 01    | [Root enabler for Extender/IDU](##Root%20enabler%20for%20Extender/IDU) | @Viraniac         |
-| 02    | [Network stats logger for ODU](##Network%20stats%20logger%20for%20ODU) | @BlueNecko        |
-| 03    | [Opensync disabler](##Opensync%20disabler)                             | @Xumi59,BlueNecko |
-| 04    | [ODU Local link generator](#ODU%20Local%20link%20generator)            | @timeisexpensivee |
+| sr.No | Name                                                           | author            |
+| ----- | -------------------------------------------------------------- | ----------------- |
+| 01    | [Root enabler for Extender/IDU](#root-enabler-for-extenderidu) | @Viraniac         |
+| 02    | [Network stats logger for ODU](#network-stats-logger-for-odu)  | @BlueNecko        |
+| 03    | [Opensync disabler](#opensync-disabler)                        | @Xumi59,BlueNecko |
+| 04    | [ODU Local link generator](#odu-local-link-generator)          | @timeisexpensivee |
 
 ## Root enabler for Extender/IDU
 ### script: [enableRootSSH](scripts/enableRootSSH.sh)

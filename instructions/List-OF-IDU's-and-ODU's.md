@@ -3,29 +3,33 @@ Note: This list is still under review, the information in this table maybe be in
 
 # 📦 List of IDUs
 
-| Model   | Manufacturer | Firmware Prefix    | Bootloader Access | DebugPorts | RootAccess | Openwrt_version | Known Issues ?                                          |
-| ------- | ------------ | ------------------ | ----------------- | ---------- | ---------- | --------------- | ------------------------------------------------------- |
-| IDU6101 | Arcadyan     | ARCNJIO_JIDU6101_R | ✅                 | uart       | ✅          | 21.02-SNAPSHOT  | 160mhz wont work on fw v2.0.9                           |
-| IDU6801 | GMOB         | GMOBJIO_JIDU6801_R | ✅                 | uart       | ✅          | 21.02-SNAPSHOT  | 160mhz wont work on fw v2.0.9                           |
-| IDU6601 | SPED         | SPEDJIO_JIDU6601_R | ✅                 | uart       | ✅          | 21.02-SNAPSHOT  | 160mhz wont work on fw v2.0.9                           |
-| IDU6401 | Sercomm      | SRCMJIO_JIDU6401_R | ✅                 | uart       | ✅          | 21.02-SNAPSHOT  | 160mhz wont work on fw v2.0.9                           |
-| IDU6701 | Skyworth     | SKYWJIO_JIDU6701_R | ✅                 | uart       | ✅          | 21.02-SNAPSHOT  | 160mhz wont work on fw v2.0.9                           |
-| IDU6811 | Telpa        | JIO_JIDU6J11_R     | ❓                 | uart       | ✅          | 19.07-SNAPSHOT  | Some users faced setting not persisting across reboots. |
-|         |              |                    |                   |            |            |                 |                                                         |
+| Model   | Manufacturer                  | Firmware Prefix    | Bootloader Access | DebugPorts | RootAccess | Openwrt_version | Known Issues ?                                          |
+| ------- | ----------------------------- | ------------------ | ----------------- | ---------- | ---------- | --------------- | ------------------------------------------------------- |
+| IDU6101 | Arcadyan (MTK7621)            | ARCNJIO_JIDU6101_R | ✅                 | uart       | ✅          | 21.02-SNAPSHOT  | 160mhz wont work on fw v2.0.9                           |
+| IDU6801 | GMOB                          | GMOBJIO_JIDU6801_R | ✅                 | uart       | ✅          | 21.02-SNAPSHOT  | 160mhz wont work on fw v2.0.9                           |
+| IDU6601 | SPED                          | SPEDJIO_JIDU6601_R | ✅                 | uart       | ✅          | 21.02-SNAPSHOT  | 160mhz wont work on fw v2.0.9                           |
+| IDU6401 | Sercomm                       | SRCMJIO_JIDU6401_R | ✅                 | uart       | ✅          | 21.02-SNAPSHOT  | 160mhz wont work on fw v2.0.9                           |
+| IDU6701 | Skyworth                      | SKYWJIO_JIDU6701_R | ✅                 | uart       | ✅          | 21.02-SNAPSHOT  | 160mhz wont work on fw v2.0.9                           |
+| IDU6811 | Telpa                         | JIO_JIDU6J11_R     | ❓                 | uart       | ✅          | 19.07-SNAPSHOT  | Some users faced setting not persisting across reboots. |
+| IDU6111 | Arcadyan (IPQ9574/AP-AL02-C1) | JIO_JIDU6J11_R     | ❓                 | uart       | ✅          | 19.07-SNAPSHOT  |                                                         |
+|         |                               |                    |                   |            |            |                 |                                                         |
+|         |                               |                    |                   |            |            |                 |                                                         |
 
 # 📡 List of ODUs
+| Model     | Manufacturer / Assembler      | Module Used                                   | Firmware_release         | DebugPorts                                         | RootAccess                  | Extra Info                                                                                                                   |
+| --------- | ----------------------------- | --------------------------------------------- | ------------------------ | -------------------------------------------------- | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| JODU51641 | ❓ Unknown                     | ❓ Unknown                                     | TBD                      | uart❓ usb❓                                         | Not yet, Unconfirmed❓       |                                                                                                                              |
+| JODU51642 | sercomm                       | COMPAL/NXP                                    | TBD                      | uart❓ usb✅(Only fastboot)                          | No❌, fastboot only device   | Fastboot is persistent for an entire boot duration if triggered correctly using hw reset btn. Device is bootloader unlocked. |
+| JODU51643 | ❓                             | ❓                                             | ❓                        | ❓                                                  | ❓                           |                                                                                                                              |
+| JODU51741 | GeneralMobile                 | RG520F-JO(SDX65)                              | TBD                      | uart❓ usb✅(exposes only fastboot)                  | No❌, fastboot only device   | Device is bootloader unlocked, flashing is possible.                                                                         |
+| JODU52040 | Askey                         | RG500Q-EA (SDX55)                             | JODU52040_REL_07_27_00_S | uart✅(Password Locked) usb✅(Full adb shell access) | yes✅, via usb -> adb -> ssh | FW is full readonly, kernel lacks overlayfs support, ssh access isn't persistent.                                            |
+| JODU52041 | Askey                         | RG500Q-EA(SDX55) _(?) - Needs cross-checking_ | TBD                      | uart✅(Password Locked) usb✅(Full adb shell access) | yes✅, via usb -> adb -> ssh | Same as above.                                                                                                               |
+| JODU52121 | LUXSHARE                      |                                               | JODU52121_REL_01_15_00_S | uart❓ usb❓                                         | Not yet, Unconfirmed❓       |                                                                                                                              |
+| JODU52140 | SPPEDTECH / NEOLYNC / LUXSLAM | RG520F-JO(SDX65)                              | TBD                      | uart✅ usb❌(doesn’t expose any port)                | No❌, uart console locked    |                                                                                                                              |
+| JODU52240 | Arcadyan                      | RG520F-JO(SDX65)                              | TBD                      | uart❓ usb❓                                         | Not yet, Unconfirmed❓       | Latest FW updates have disabled the web UI abilities.                                                                        |
+| JODU52540 |                               |                                               | JODU52540_REL_25_01_05_S | uart❓ usb❓                                         | Not yet, Unconfirmed❓       |                                                                                                                              |
+#### TBD: To be determined yet 
 
-| Model     | Manufacturer / Assembler      | Module Used                                   | Firmware_release         | DebugPorts                         | RootAccess                   | Extra Info                                           |
-| --------- | ----------------------------- | --------------------------------------------- | ------------------------ | ---------------------------------- | ---------------------------- | ---------------------------------------------------- |
-| JODU52040 | Askey                         | RG500Q-EA (SDX55)                             | JODU52040_REL_07_27_00_S | uart✅ usb✅                         | yes✅, via usb -> adb -> ssh  |                                                      |
-| JODU52041 | Askey                         | RG500Q-EA(SDX55) _(?) - Needs cross-checking_ | TBD                      | uart✅ usb✅                         | yes✅, via usb -> adb -> ssh  |                                                      |
-| JODU51641 | ❓ Unknown                     | ❓ Unknown                                     | TBD                      | uart❓ usb❓                         | Not yet, Unconfirmed❓        |                                                      |
-| JODU51642 | Compal NXP                    | ❓ Unknown                                     | TBD                      | uart✅ usb❌(unknown, driver)        | Not yet, Console locked      |                                                      |
-| JODU52240 | Arcadyan                      | RG520F-JO(SDX65)                              | TBD                      | uart❓ usb❓                         | Not yet, Unconfirmed❓        | Latest FW updates have disabled the webui abilities. |
-| JODU52140 | SPPEDTECH / NEOLYNC / LUXSLAM | RG520F-JO(SDX65)                              | TBD                      | uart✅ usb❌(doesnt expose any port) | Not yet, Console locked      |                                                      |
-| JODU51741 | GeneralMobile                 | ❓ Unknown                                     | TBD                      | uart❓ usb✅(exposes only fastboot)  | Not yet, only Fastboot works |                                                      |
-
-TBD: To be determined yet 
 
 ## Firmware links
 
