@@ -18,7 +18,9 @@ _Disclaimer: This is ONLY for educational purposes, No one is responsible for an
 
     ![ODU ipv6 address fetch](../assets/ODU_ipv6_address_fetch.png)
 
-    _NOTE: If you don't get an ipv6 address in return then try restarting your router once. That should fix the issue most of the times if you haven't messed around the settings to much. If the issue still persists then reset the router and try again._
+    _NOTE: If you couldn't get the local link or there is no link present in the output, utilize the mac2ipv6 generator script. [mac2ipv6](../scripts/mac2ipv6.sh)_ 
+    
+    
 
 2. Start a SSH tunnel from any local device:
 
