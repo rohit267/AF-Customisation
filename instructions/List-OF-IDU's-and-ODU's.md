@@ -38,8 +38,7 @@ Note: This list is still under review, the information in this table maybe be in
 | SPEDJIO_JIDU6601_R | [Download](https://mega.nz/file/T5g03aLZ#AGr7fBJDbpa0dLXrL-bAdALjEBgAT1wVzL7ncA0RJq8) |                                                                    |
 | SRCMJIO_JIDU6401_R | [Download](https://mega.nz/file/Pkh0SbpB#kBpW7ls7Y2GJ7Y47DmgzzHNd-OCBSEBUoMblwyovp_E) |                                                                    |
 | SKYWJIO_JIDU6701_R | [Download](https://mega.nz/file/LgYkUTBJ#btKP77FlbvokfYR0mmBQCQEtCoLaAkIqjt7SpdKoiBI) |                                                                    |
-|                    |                                                                                       |                                                                    |
 
-| Firmware ID              | Links                                                                                 |
-| ------------------------ | ------------------------------------------------------------------------------------- |
-| JODU52041_REL_02_32_00_S | [Download](https://mega.nz/file/nsAwwDjT#Tme3W2k8VCRAB7b99L1wI0NVxwrBHB0_bJ51Ck2i0JQ) |
+| Firmware ID              | Links                                                                                 | Notes                    |
+| ------------------------ | ------------------------------------------------------------------------------------- | ------------------------ |
+| JODU52041_REL_02_32_00_S | [Download](https://mega.nz/file/nsAwwDjT#Tme3W2k8VCRAB7b99L1wI0NVxwrBHB0_bJ51Ck2i0JQ) | ❌Locked FW, DO NOT FLASH |
