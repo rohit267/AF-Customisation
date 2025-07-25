@@ -14,7 +14,7 @@
 |   4    | JAF IDU Reset Via SSH        |      [Open](instructions/JAF-IDU-Reset-Via-SSH.md)      |
 |   5    | JAF IDU LuCI Install Guide   |   [Open](instructions/JAF-IDU-LuCI-Install-Guide.md)    |
 |   6    | JAF ODU Access Via The IDU   |   [Open](instructions/JAF-ODU-Access-Via-The-IDU.md)    |
-|   7    | JAF ODU Access Via Bluetooth |         [Open](JAF-ODU-Access-Via-Bluetooth.md)         |
+|   7    | JAF ODU Access Via Bluetooth |         [Open](instructions/JAF-ODU-Access-Via-Bluetooth.md)         |
 |   8    | JAF ODU SSH Access Via ADB   |   [Open](instructions/JAF-ODU-SSH-Access-Via-ADB.md)    |
 |   9    | List of IDUs and ODUs        |     [Open](instructions/List-OF-IDU's-and-ODU's.md)     |
 |   10   | Understand Tr069             | [Open](instructions/Understanding-Workings-Of-TR069.md) |
